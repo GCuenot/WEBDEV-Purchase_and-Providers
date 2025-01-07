@@ -1,5 +1,4 @@
 package fr.isen.purchaseproviders;
-//Mettez le nom et le chemin de votre dossier
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ public class statusResource {
         String state = "OK"; // OK ou KO ou Dégradé
         // L'état dégradé veut dire que votre code interne fonctionne mais que vous attendez un code dont vous êtes dépendants, donc d'un autre groupe
         String version = "1.0";
-        int count = 42; // Remplacez par une requête réelle pour compter les éléments de votre BDD
+         int count = getProvidersCount(); // Récupérer le nombre d'éléments dans la BDD
 
         Map<String, Object> statusResponse = new HashMap<>();
         statusResponse.put("state", state);
@@ -27,4 +26,22 @@ public class statusResource {
         return objectMapper.writeValueAsString(statusResponse);
     }
 
+    private int getProvidersCount() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM providers"; // Requête SQL pour compter les enregistrements
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }
+
+
