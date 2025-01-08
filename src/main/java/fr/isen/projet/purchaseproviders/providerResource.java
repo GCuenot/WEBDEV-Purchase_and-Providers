@@ -20,8 +20,8 @@ public class providerResource {
 
     // Endpoint pour récupérer tous les provider
     @GET
-    public List<ProviderModel> getAllProviders() {
-        return providerService.getAllProviders();
+    public List<ProviderModel> readAllProvider() {
+        return providerService.readAllProvider();
     }
 
     // Endpoint pour récupérer une provider par son ID

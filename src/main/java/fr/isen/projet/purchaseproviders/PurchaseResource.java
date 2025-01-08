@@ -1,4 +1,4 @@
-@Path("/purchases")
+/*@Path("/purchases")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PurchaseResource {
@@ -50,4 +50,4 @@ public class PurchaseResource {
         return Response.ok(priceEvolution).build();
     }
 
-}
+}*/

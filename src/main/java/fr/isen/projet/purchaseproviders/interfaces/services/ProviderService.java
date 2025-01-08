@@ -24,7 +24,9 @@ public interface ProviderService {
 
 //begin of modifiable zone(Javadoc).......C/8c3129db-5f70-4f01-87c9-01b1200216ee
 
-//end of modifiable zone(Javadoc).........E/8c3129db-5f70-4f01-87c9-01b1200216ee
+    //List<ProviderModel> getAllProviders();
+
+    //end of modifiable zone(Javadoc).........E/8c3129db-5f70-4f01-87c9-01b1200216ee
     ProviderModel updateProvider(final ProviderModel provider);
 
 //begin of modifiable zone(Javadoc).......C/06b1fe26-fff9-4b02-b42a-823569bb248e

@@ -1,4 +1,4 @@
-package fr.isen.projet.purchaseproviders.interfaces.services;
+/*package fr.isen.projet.purchaseproviders.interfaces.services;
 
 import java.util.List;
 import fr.isen.projet.purchaseproviders.interfaces.models.PurchaseModel;
@@ -38,3 +38,4 @@ public interface PurchaseService {
     List<Float> getPriceEvolution(final String IDProduct);
 
 }
+*/

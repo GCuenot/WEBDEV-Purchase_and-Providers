@@ -18,7 +18,7 @@ public class providerServiceImpl implements ProviderService{
 
 
     @Override
-    public String createProvider(ProviderModel provider) {
+    public ProviderModel createProvider(ProviderModel provider) {
         String sql = "INSERT INTO provider (id, name, service, siren, status, id_contact, registration_date, region, legal_informations, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -33,7 +33,7 @@ public class providerServiceImpl implements ProviderService{
             stmt.setString(9, provider.getLegalInformations());
             stmt.setString(10, provider.getCategory());
             stmt.executeUpdate();
-            return provider.getId();
+            return provider;
         } catch (SQLException e) {
             throw new RuntimeException("Error creating provider", e);
         }
@@ -69,7 +69,7 @@ public class providerServiceImpl implements ProviderService{
     }
 
     @Override
-    public List<ProviderModel> getAllProviders() {
+    public List<ProviderModel> readAllProvider() {
         List<ProviderModel> providers = new ArrayList<>();
         String sql = "SELECT * FROM provider";
         try (Connection conn = dataSource.getConnection();
