@@ -20,7 +20,7 @@ public interface ProviderService {
 //begin of modifiable zone(Javadoc).......C/a4dd0405-262c-4330-8217-8f4ee061ab44
 
 //end of modifiable zone(Javadoc).........E/a4dd0405-262c-4330-8217-8f4ee061ab44
-    List<ProviderModel> readAllProvider();
+    List<ProviderModel> getAllProviders();
 
 //begin of modifiable zone(Javadoc).......C/8c3129db-5f70-4f01-87c9-01b1200216ee
 
