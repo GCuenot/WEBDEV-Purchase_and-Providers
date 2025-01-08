@@ -19,12 +19,53 @@ public class providerServiceImpl implements ProviderService{
 
     @Override
     public String createProvider(ProviderModel provider) {
-        return "";
+        String sql = "INSERT INTO provider (id, name, service, siren, status, id_contact, registration_date, region, legal_informations, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, provider.getId());
+            stmt.setString(2, provider.getName());
+            stmt.setString(3, provider.getService());
+            stmt.setString(4, provider.getSIREN());
+            stmt.setString(5, provider.getStatus());
+            stmt.setString(6, provider.getIdContact());
+            stmt.setString(7, provider.getRegistrationDate());
+            stmt.setString(8, provider.getRegion());
+            stmt.setString(9, provider.getLegalInformations());
+            stmt.setString(10, provider.getCategory());
+            stmt.executeUpdate();
+            return provider.getId();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating provider", e);
+        }
     }
 
     @Override
     public ProviderModel readProvider(String id) {
-        return null;
+        String sql = "SELECT * FROM provider WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    ProviderModel provider = new ProviderModel();
+                    provider.setId(rs.getString("id"));
+                    provider.setName(rs.getString("name"));
+                    provider.setService(rs.getString("service"));
+                    provider.setSIREN(rs.getString("siren"));
+                    provider.setStatus(rs.getString("status"));
+                    provider.setIdContact(rs.getString("id_contact"));
+                    provider.setRegistrationDate(rs.getString("registration_date"));
+                    provider.setRegion(rs.getString("region"));
+                    provider.setLegalInformations(rs.getString("legal_informations"));
+                    provider.setCategory(rs.getString("category"));
+                    return provider;
+                } else {
+                    throw new RuntimeException("Provider not found for ID: " + id);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching provider by ID", e);
+        }
     }
 
     @Override
@@ -42,7 +83,7 @@ public class providerServiceImpl implements ProviderService{
                 provider.setSIREN(rs.getString("siren"));
                 provider.setStatus(rs.getString("status"));
                 provider.setIdContact(rs.getString("id_contact"));
-                provider.setRegistrationDate(rs.getString("registration"));
+                provider.setRegistrationDate(rs.getString("registration_date"));
                 provider.setRegion(rs.getString("region"));
                 provider.setLegalInformations(rs.getString("legal_informations"));
                 provider.setCategory(rs.getString("category"));
@@ -60,7 +101,7 @@ public class providerServiceImpl implements ProviderService{
     }
 
     @Override
-    public void deleteProvider(int id) {
+    public void deleteProvider(String id) {
 
     }
 

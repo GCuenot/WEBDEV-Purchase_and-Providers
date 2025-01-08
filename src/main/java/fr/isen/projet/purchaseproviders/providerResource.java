@@ -24,29 +24,29 @@ public class ProviderResource {
         return providerService.getAllProviders();
     }
 
-    // Endpoint pour récupérer une provider par son UUID
-    /*@GET
+    // Endpoint pour récupérer une provider par son ID
+    @GET
     @Path("/{id}")
-    public Response getProviderById(@PathParam("id") String id) {
-        ProviderModel provider = providerService.getProviderById(id);
+    public Response readProvider(@PathParam("id") String id) {
+        ProviderModel provider = providerService.readProvider(id);
         if (provider == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Adresse non trouvée").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Provider non trouvée").build();
         }
         return Response.ok(provider).build();
-    }*/
+    }
 
-    /*// Endpoint pour créer une nouvelle provider
+    // Endpoint pour créer un nouveau provider
     @POST
     public Response createProvider(ProviderModel provider) {
         ProviderModel createdProvider = providerService.createProvider(provider);
         return Response.status(Response.Status.CREATED).entity(createdProvider).build();
-    }*/
+    }
 
-    // Endpoint pour mettre à jour une provider existante
+    /*// Endpoint pour mettre à jour une provider existante
     @PUT
     @Path("/{id}")
     public Response updateProvider(@PathParam("id") String id, ProviderModel updatedProvider) {
-        ProviderModel provider = providerService.updateProvider(id, updatedProvider);
+        ProviderModel provider = providerService.updateProvider(updatedProvider);
         if (provider == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Adresse non trouvée").build();
         }
@@ -59,5 +59,5 @@ public class ProviderResource {
     public Response deleteProvider(@PathParam("id") String id) {
         providerService.deleteProvider(id);
         return Response.noContent().build();
-    }
+    }*/
 }
