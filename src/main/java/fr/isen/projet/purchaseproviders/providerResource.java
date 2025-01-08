@@ -1,20 +1,19 @@
-package fr.isen.purchaseproviders.resources;
+package fr.isen.projet.purchaseproviders;
 
-import fr.isen.purchaseproviders.interfaces.models.ProviderModel;
-import fr.isen.purchaseproviders.interfaces.models.PurchaseModel;
+import fr.isen.projet.purchaseproviders.interfaces.services.ProviderService;
+import fr.isen.projet.purchaseproviders.interfaces.models.ProviderModel;
+import fr.isen.projet.purchaseproviders.implement.providerServiceImpl;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.util.ArrayList;
 import java.util.List;
 
-@Path("/providers")
+
+@Path("/provider")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ProviderResource {
+public class providerResource {
 
     @Inject
     private ProviderService providerService;
@@ -54,23 +53,11 @@ public class ProviderResource {
         return Response.ok(provider).build();
     }
 
-    @GET
-    public Response readAllProviders() {
-        // Implémentation : Récupérer tous les fournisseurs
-        List<ProviderModel> providers = new ArrayList<>();
-        return Response.ok(providers).build();
-    }
-
-    @PUT
-    public Response updateProvider(ProviderModel provider) {
-        // Implémentation : Mettre à jour le fournisseur
-        return Response.ok("Provider updated successfully").build();
-    }
-
+    // Endpoint pour supprimer une provider par son UUID
     @DELETE
     @Path("/{id}")
-    public Response deleteProvider(@PathParam("id") int id) {
-        // Implémentation : Supprimer le fournisseur
+    public Response deleteProvider(@PathParam("id") String id) {
+        providerService.deleteProvider(id);
         return Response.noContent().build();
     }*/
 }
