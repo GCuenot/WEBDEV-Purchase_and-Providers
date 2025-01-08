@@ -10,7 +10,7 @@ public interface ProviderService {
 //begin of modifiable zone(Javadoc).......C/b4fe758d-d0c9-4557-bec9-8da9676811c4
 
 //end of modifiable zone(Javadoc).........E/b4fe758d-d0c9-4557-bec9-8da9676811c4
-    String createProvider(final ProviderModel provider);
+    ProviderModel createProvider(final ProviderModel provider);
 
 //begin of modifiable zone(Javadoc).......C/f13708f6-05a9-46df-b7c9-8c7cbf5c938b
 
@@ -20,7 +20,7 @@ public interface ProviderService {
 //begin of modifiable zone(Javadoc).......C/a4dd0405-262c-4330-8217-8f4ee061ab44
 
 //end of modifiable zone(Javadoc).........E/a4dd0405-262c-4330-8217-8f4ee061ab44
-    List<ProviderModel> getAllProviders();
+    List<ProviderModel> readAllProvider();
 
 //begin of modifiable zone(Javadoc).......C/8c3129db-5f70-4f01-87c9-01b1200216ee
 
