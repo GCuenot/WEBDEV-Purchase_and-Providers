@@ -134,11 +134,11 @@ CREATE TABLE IF NOT EXISTS `contact_model` (
   `first_name` VARCHAR(1024),
   `email` VARCHAR(1024),
   `personal_phone` BIGINT,
-  `function` VARCHAR(1024),
+  `job` VARCHAR(1024),
   `work_phone` BIGINT
 );
 
-INSERT INTO `contact_model` (`uuid`,`id_address`,`name`,`first_name`,`email`,`personal_phone`,`function`,`work_phone`)
+INSERT INTO `contact_model` (`uuid`,`id_address`,`name`,`first_name`,`email`,`personal_phone`,`job`,`work_phone`)
 VALUES
 ('a8dff5c7-8d88-4fcb-jklo-e4a09de05e36','a8dff5c7-8d88-4fcb-8d24-e4a09de05e36','Dupont','Jean','jean.dupont@example.com',601020304,'Développeur',140234567),
 ('ecb9d879-9a9b-4d85-jklo-5867e827efb9','ecb9d879-9a9b-4d85-b0b2-5867e827efb9','Martin','Sophie','sophie.martin@example.com',612345678,'Responsable RH',148765432),
