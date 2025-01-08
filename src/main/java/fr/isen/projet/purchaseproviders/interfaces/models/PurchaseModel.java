@@ -27,11 +27,6 @@ public class PurchaseModel {
 //end of modifiable zone(Javadoc).........E/26558318-8d7d-404b-be6c-aca6878a6fb1
     private int quantity;
 
-//begin of modifiable zone(Javadoc).......C/e3e46f1c-6379-492f-82d5-b72ffc9e1cf7
-
-//end of modifiable zone(Javadoc).........E/e3e46f1c-6379-492f-82d5-b72ffc9e1cf7
-    private String product;
-
 //begin of modifiable zone(Javadoc).......C/88920037-8450-4234-a034-2186a64918b4
 
 //end of modifiable zone(Javadoc).........E/88920037-8450-4234-a034-2186a64918b4

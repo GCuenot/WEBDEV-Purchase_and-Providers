@@ -30,7 +30,7 @@ public interface ProviderService {
 //begin of modifiable zone(Javadoc).......C/06b1fe26-fff9-4b02-b42a-823569bb248e
 
 //end of modifiable zone(Javadoc).........E/06b1fe26-fff9-4b02-b42a-823569bb248e
-    void deleteProvider(final int id);
+    void deleteProvider(final String id);
 
 //begin of modifiable zone(Javadoc).......C/d76dac1a-7b20-4680-a7b5-87d448403465
 

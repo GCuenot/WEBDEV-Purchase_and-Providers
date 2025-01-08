@@ -20,11 +20,6 @@ public class ProviderModel {
 //end of modifiable zone(Javadoc).........E/8997f4fb-428e-4887-8495-14a01a49215c
     private String service;
 
-//begin of modifiable zone(Javadoc).......C/9a0bcdc7-a980-41ea-ae9f-8857e07295d9
-
-//end of modifiable zone(Javadoc).........E/9a0bcdc7-a980-41ea-ae9f-8857e07295d9
-    private String contact;
-
 //begin of modifiable zone(Javadoc).......C/3a3b18b1-d97f-4e31-bc47-313b3acd88b1
 
 //end of modifiable zone(Javadoc).........E/3a3b18b1-d97f-4e31-bc47-313b3acd88b1

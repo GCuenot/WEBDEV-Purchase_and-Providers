@@ -30,7 +30,7 @@ public interface PurchaseService {
 //begin of modifiable zone(Javadoc).......C/6c49b0b2-1a4e-4127-8c67-5e9e2e39a8f9
 
 //end of modifiable zone(Javadoc).........E/6c49b0b2-1a4e-4127-8c67-5e9e2e39a8f9
-    void deletePurchase(final int id);
+    void deletePurchase(final String id);
 
 //begin of modifiable zone(Javadoc).......C/2da40f49-99a8-42c2-b07d-146b64442d34
 
