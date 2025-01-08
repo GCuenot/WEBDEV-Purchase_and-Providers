@@ -1,6 +1,5 @@
 package fr.isen.purchaseproviders.interfaces.services;
 
-import java.util.Date;
 import java.util.List;
 import fr.isen.purchaseproviders.interfaces.models.ProviderModel;
 
@@ -41,6 +40,6 @@ public interface ProviderService {
 //begin of modifiable zone(Javadoc).......C/d42d1743-93b5-4f5c-a34e-02eddeb2877e
 
 //end of modifiable zone(Javadoc).........E/d42d1743-93b5-4f5c-a34e-02eddeb2877e
-    List<Float> getMonthlyRevenue(final Date satrtDate);
+    List<Float> getMonthlyRevenue(final int satrtDate);
 
 }
