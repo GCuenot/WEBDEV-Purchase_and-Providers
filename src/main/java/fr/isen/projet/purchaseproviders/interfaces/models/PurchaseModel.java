@@ -1,7 +1,7 @@
-package fr.isen.purchaseproviders.interfaces.models;
+package fr.isen.projet.purchaseproviders.interfaces.models;
 
 import java.util.Date;
-import fr.isen.purchaseproviders.interfaces.models.enums.PURCHASE_STATE;
+import fr.isen.projet.purchaseproviders.interfaces.models.enums.PURCHASE_STATE;
 
 //begin of modifiable zone(Javadoc).......C/73030875-b290-49cb-98f5-3e70f0016012
 

@@ -1,7 +1,7 @@
-package fr.isen.purchaseproviders.interfaces.services;
+package fr.isen.projet.purchaseproviders.interfaces.services;
 
 import java.util.List;
-import fr.isen.purchaseproviders.interfaces.models.ProviderModel;
+import fr.isen.projet.purchaseproviders.interfaces.models.ProviderModel;
 
 //begin of modifiable zone(Javadoc).......C/8c6a112c-031f-466c-894e-c18706d5288b
 

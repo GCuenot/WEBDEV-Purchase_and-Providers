@@ -1,4 +1,4 @@
-package fr.isen.purchaseproviders.interfaces.models;
+package fr.isen.projet.purchaseproviders.interfaces.models;
 
 
 //begin of modifiable zone(Javadoc).......C/f70e4641-2960-4607-929a-431da0be3b48

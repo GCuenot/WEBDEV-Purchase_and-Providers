@@ -1,4 +1,4 @@
-package fr.isen.purchaseproviders.interfaces.models.enums;
+package fr.isen.projet.purchaseproviders.interfaces.models.enums;
 
 
 //begin of modifiable zone(Javadoc).......C/617bf0b7-95d7-46e1-b9fa-6a85033e9565
