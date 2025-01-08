@@ -15,7 +15,7 @@ public interface PurchaseService {
 //begin of modifiable zone(Javadoc).......C/92b6adf5-8926-40da-a983-011ed0fe123a
 
 //end of modifiable zone(Javadoc).........E/92b6adf5-8926-40da-a983-011ed0fe123a
-    PurchaseModel readPurchase(final int id);
+    PurchaseModel readPurchase(final String id);
 
 //begin of modifiable zone(Javadoc).......C/96b354fc-6445-4b60-94ea-794324313200
 

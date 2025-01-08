@@ -15,7 +15,7 @@ public interface ProviderService {
 //begin of modifiable zone(Javadoc).......C/f13708f6-05a9-46df-b7c9-8c7cbf5c938b
 
 //end of modifiable zone(Javadoc).........E/f13708f6-05a9-46df-b7c9-8c7cbf5c938b
-    ProviderModel readProvider(final int id);
+    ProviderModel readProvider(final String id);
 
 //begin of modifiable zone(Javadoc).......C/a4dd0405-262c-4330-8217-8f4ee061ab44
 
