@@ -1,4 +1,4 @@
-/*package fr.isen.projet.purchaseproviders.interfaces.models;
+package fr.isen.projet.purchaseproviders.interfaces.models;
 
 import java.util.Date;
 import fr.isen.projet.purchaseproviders.interfaces.models.enums.PURCHASE_STATE;
@@ -65,4 +65,3 @@ public class PurchaseModel {
         this.idProduct = idProduct;
     }
 }
-*/
