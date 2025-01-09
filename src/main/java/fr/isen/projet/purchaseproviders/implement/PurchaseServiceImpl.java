@@ -39,8 +39,28 @@ public class PurchaseServiceImpl implements PurchaseService {
             throw e;
         }
 
-        // Si l'idProduct est valide, on peut insérer la nouvelle purchase
-        String sql = "INSERT INTO purchase (id, buyDate, price, quantity, state, idProduct) VALUES (?, ?, ?, ?, ?, ?)";
+        // Vérification que l'idOrder existe dans la table order
+        String checkOrderSql = "SELECT COUNT(*) FROM `order` WHERE id_order = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement checkStmt = conn.prepareStatement(checkOrderSql)) {
+
+            checkStmt.setString(1, purchase.getIdOrder());
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    // Erreur si l'ordre n'existe pas
+                    throw new OrderNotFoundException("Ordre avec idOrder " + purchase.getIdOrder() + " non trouvé.");
+                }
+            }
+        } catch (SQLException e) {
+            // Si c'est une erreur de connexion ou d'exécution de la requête
+            throw new RuntimeException("Erreur lors de la vérification de l'existence de l'ordre", e);
+        } catch (OrderNotFoundException e) {
+            // Gestion spécifique de l'exception si l'ordre n'existe pas
+            throw e;
+        }
+
+        // Si les idProduct et idOrder sont valides, on peut insérer la nouvelle purchase
+        String sql = "INSERT INTO purchase (id, buyDate, price, quantity, state, idProduct, idOrder) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -53,6 +73,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             stmt.setInt(4, purchase.getQuantity());
             stmt.setString(5, purchase.getState().toString());
             stmt.setString(6, purchase.getIdProduct());
+            stmt.setString(7, purchase.getIdOrder());
 
             stmt.executeUpdate();
             return purchase;
@@ -69,10 +90,18 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
     }
 
+    // Exception personnalisée pour indiquer que l'ordre n'a pas été trouvé
+    public class OrderNotFoundException extends RuntimeException {
+        public OrderNotFoundException(String message) {
+            super(message);
+        }
+    }
+
+
 
     @Override
     public PurchaseModel readPurchase(String id) {
-        String sql = "SELECT id, buyDate, price, quantity, state, idProduct FROM purchase WHERE id = ?";
+        String sql = "SELECT id, buyDate, price, quantity, state, idProduct, idOrder FROM purchase WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, id);
@@ -85,6 +114,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                     purchase.setQuantity(rs.getInt("quantity"));
                     purchase.setState(PURCHASE_STATE.valueOf(rs.getString("state")));
                     purchase.setIdProduct(rs.getString("idProduct"));
+                    purchase.setIdOrder(rs.getString("idOrder"));
                     return purchase;
                 } else {
                     throw new RuntimeException("Purchase not found for ID: " + id);
@@ -98,7 +128,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public List<PurchaseModel> readAllPurchase() {
         List<PurchaseModel> purchases = new ArrayList<>();
-        String sql = "SELECT id, buyDate, price, quantity, state, idProduct FROM purchase";
+        String sql = "SELECT id, buyDate, price, quantity, state, idProduct, idOrder FROM purchase";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -110,6 +140,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 purchase.setQuantity(rs.getInt("quantity"));
                 purchase.setState(PURCHASE_STATE.valueOf(rs.getString("state")));
                 purchase.setIdProduct(rs.getString("idProduct"));
+                purchase.setIdOrder(rs.getString("idOrder"));
                 purchases.add(purchase);
             }
         } catch (SQLException e) {
@@ -120,7 +151,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public PurchaseModel updatePurchase(PurchaseModel purchase) {
-        String sql = "UPDATE purchase SET buyDate = ?, price = ?, quantity = ?, state = ?, idProduct = ? WHERE id = ?";
+        String sql = "UPDATE purchase SET buyDate = ?, price = ?, quantity = ?, state = ?, idProduct = ?, idOrder = ? WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -133,6 +164,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             stmt.setString(4, purchase.getState().toString());
             stmt.setString(5, purchase.getIdProduct());
             stmt.setString(6, purchase.getId());
+            stmt.setString(7, purchase.getIdOrder());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
