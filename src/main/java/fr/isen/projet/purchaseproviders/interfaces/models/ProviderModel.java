@@ -4,12 +4,12 @@ public class ProviderModel {
     private String id;
     private String name;
     private String service;
-    private String SIREN;
+    private String siren;
     private String status;
-    private String idContact;
-    private String registrationDate;
+    private String id_contact;
+    private String registration_date;
     private String region;
-    private String legalInformations;
+    private String legal_informations;
     private String category;
 
     // Getter et Setter pour id
@@ -39,13 +39,13 @@ public class ProviderModel {
         this.service = service;
     }
 
-    // Getter et Setter pour SIREN
+    // Getter et Setter pour siren
     public String getSIREN() {
-        return SIREN;
+        return siren;
     }
 
-    public void setSIREN(String SIREN) {
-        this.SIREN = SIREN;
+    public void setSIREN(String siren) {
+        this.siren = siren;
     }
 
     // Getter et Setter pour status
@@ -57,22 +57,22 @@ public class ProviderModel {
         this.status = status;
     }
 
-    // Getter et Setter pour idContact
+    // Getter et Setter pour id_contact
     public String getIdContact() {
-        return idContact;
+        return id_contact;
     }
 
-    public void setIdContact(String idContact) {
-        this.idContact = idContact;
+    public void setIdContact(String id_contact) {
+        this.id_contact = id_contact;
     }
 
-    // Getter et Setter pour registrationDate
+    // Getter et Setter pour registration_date
     public String getRegistrationDate() {
-        return registrationDate;
+        return registration_date;
     }
 
-    public void setRegistrationDate(String registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setRegistrationDate(String registration_date) {
+        this.registration_date = registration_date;
     }
 
     // Getter et Setter pour region
@@ -84,13 +84,13 @@ public class ProviderModel {
         this.region = region;
     }
 
-    // Getter et Setter pour legalInformations
+    // Getter et Setter pour legal_informations
     public String getLegalInformations() {
-        return legalInformations;
+        return legal_informations;
     }
 
-    public void setLegalInformations(String legalInformations) {
-        this.legalInformations = legalInformations;
+    public void setLegalInformations(String legal_informations) {
+        this.legal_informations = legal_informations;
     }
 
     // Getter et Setter pour category
