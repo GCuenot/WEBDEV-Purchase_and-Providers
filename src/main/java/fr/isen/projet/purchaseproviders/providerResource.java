@@ -8,6 +8,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
+import java.util.Collections;
+
 
 
 @Path("/provider")
@@ -68,4 +70,30 @@ public class providerResource {
         providerService.deleteProvider(id);
         return Response.noContent().build();
     }
+
+    @GET
+    @Path("/annual/{year}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAnnualRevenue(@PathParam("year") int year) {
+        float revenue = providerService.getAnnualRevenue(year);
+        return Response.ok(Collections.singletonMap("annual_revenue", revenue)).build();
+    }
+
+    /*@GET
+    @Path("/monthly/{year}/{month}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMonthlyRevenue(@PathParam("year") int year, @PathParam("month") int month) {
+        // Vérifier que les paramètres sont bien transmis
+        System.out.println("Year: " + year + ", Month: " + month);  // Pour débogage
+
+        // Appeler le service pour récupérer les revenus mensuels pour l'année et le mois spécifiés
+        List<Float> monthlyRevenue = providerService.getMonthlyRevenue(year, month);
+
+        if (monthlyRevenue != null && !monthlyRevenue.isEmpty()) {
+            return Response.ok(monthlyRevenue).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("No data found").build();
+        }
+    }*/
+
 }

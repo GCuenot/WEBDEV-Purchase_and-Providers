@@ -139,12 +139,68 @@ public class providerServiceImpl implements ProviderService{
 
     @Override
     public float getAnnualRevenue(int startDate) {
-        return 0;
+        // Requête SQL pour récupérer le revenu total annuel à partir de la date de début
+        String sql = "SELECT SUM(o.total_amount) AS annual_revenue " +
+                "FROM `order` o " +
+                "JOIN `product` pr ON o.uuid_item = pr.id_product " +
+                "WHERE YEAR(o.date_created) = ?";
+
+        // Variable pour stocker le revenu annuel total
+        float annualRevenue = 0;
+
+        // Connexion à la base de données et exécution de la requête
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/votre_base_de_donnees", "votre_utilisateur", "votre_mot_de_passe");
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Définir le paramètre de l'année (startDate) dans la requête SQL
+            stmt.setInt(1, startDate);
+
+            // Exécution de la requête
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Si des résultats sont trouvés, on récupère la somme
+                if (rs.next()) {
+                    annualRevenue = rs.getFloat("annual_revenue");  // Récupération du revenu annuel total
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Gestion des exceptions SQL
+        }
+
+        return annualRevenue;  // Retourner le revenu annuel total
     }
 
     @Override
     public List<Float> getMonthlyRevenue(int startDate) {
-        return List.of();
+        /*// Requête SQL pour récupérer le revenu total mensuel à partir de l'année et du mois spécifiés
+        String sql = "SELECT SUM(o.total_amount) AS monthly_revenue " +
+                "FROM `order` o " +
+                "JOIN `product` pr ON o.uuid_item = pr.id_product " +
+                "WHERE YEAR(o.date_created) = ? AND MONTH(o.date_created) = ?";
+
+        // Liste pour stocker les revenus mensuels
+        List<Float> monthlyRevenue = new ArrayList<>();
+
+        // Connexion à la base de données et exécution de la requête
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/votre_base_de_donnees", "votre_utilisateur", "votre_mot_de_passe");
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Définir les paramètres de l'année et du mois dans la requête SQL
+            stmt.setInt(1, year);  // On définit l'année
+            stmt.setInt(2, month); // On définit le mois
+
+            // Exécution de la requête
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Si des résultats sont trouvés, on récupère la somme
+                if (rs.next()) {
+                    float revenue = rs.getFloat("monthly_revenue");  // Récupération du revenu mensuel
+                    monthlyRevenue.add(revenue);  // Ajouter à la liste
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Gestion des exceptions SQL
+        }*/
+
+        return List.of();  // Retourner la liste des revenus mensuels
     }
 }
 

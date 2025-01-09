@@ -12,6 +12,7 @@ public class ProviderModel {
     private String legal_informations;
     private String category;
 
+
     // Getter et Setter pour id
     public String getId() {
         return id;
@@ -102,3 +103,4 @@ public class ProviderModel {
         this.category = category;
     }
 }
+
