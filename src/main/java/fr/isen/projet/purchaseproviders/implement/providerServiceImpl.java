@@ -34,8 +34,9 @@ public class providerServiceImpl implements ProviderService{
             stmt.setString(10, provider.getCategory());
             stmt.executeUpdate();
             return provider;
+
         } catch (SQLException e) {
-            throw new RuntimeException("Error creating provider", e);
+            throw new RuntimeException("Error creating provider" + e.getMessage(), e);
         }
     }
 
@@ -111,7 +112,7 @@ public class providerServiceImpl implements ProviderService{
     }
 
     @Override
-    public List<Float> getMonthlyRevenue(int satrtDate) {
+    public List<Float> getMonthlyRevenue(int startDate) {
         return List.of();
     }
 }

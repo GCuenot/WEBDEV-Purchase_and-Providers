@@ -1,4 +1,4 @@
-package fr.isen.projet.purchaseproviders.implement;
+/*package fr.isen.projet.purchaseproviders.implement;
 
 
 import fr.isen.projet.adressesetcontacts.interfaces.models.AddressModel;
@@ -110,4 +110,4 @@ public class purchaseServiceImpl {
             throw new RuntimeException("Error deleting address", e);
         }
     }
-}
+}*/
