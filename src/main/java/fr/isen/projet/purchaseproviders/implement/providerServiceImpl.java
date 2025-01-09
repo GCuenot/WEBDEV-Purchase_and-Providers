@@ -34,8 +34,9 @@ public class providerServiceImpl implements ProviderService{
             stmt.setString(10, provider.getCategory());
             stmt.executeUpdate();
             return provider;
+
         } catch (SQLException e) {
-            throw new RuntimeException("Error creating provider", e);
+            throw new RuntimeException("Error creating provider" + e.getMessage(), e);
         }
     }
 
@@ -97,12 +98,43 @@ public class providerServiceImpl implements ProviderService{
 
     @Override
     public ProviderModel updateProvider(ProviderModel provider) {
-        return null;
+
+        String sql = "UPDATE provider SET name = ?, service = ?, siren = ?, status = ?, id_contact = ?, registration_date = ?, region = ?, legal_informations = ?, category = ? WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, provider.getName());
+            stmt.setString(2, provider.getService());
+            stmt.setString(3, provider.getSIREN());
+            stmt.setString(4, provider.getStatus());
+            stmt.setString(5, provider.getIdContact());
+            stmt.setString(6, provider.getRegistrationDate());
+            stmt.setString(7, provider.getRegion());
+            stmt.setString(8, provider.getLegalInformations());
+            stmt.setString(9, provider.getCategory());
+            stmt.setString(10, provider.getId());
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new RuntimeException("No provider found with ID: " + provider.getId());
+            }
+            return provider;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating provider", e);
+        }
     }
 
     @Override
     public void deleteProvider(String id) {
-
+        String sql = "DELETE FROM provider WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new RuntimeException("No provider found with ID: " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting provider", e);
+        }
     }
 
     @Override
@@ -111,7 +143,7 @@ public class providerServiceImpl implements ProviderService{
     }
 
     @Override
-    public List<Float> getMonthlyRevenue(int satrtDate) {
+    public List<Float> getMonthlyRevenue(int startDate) {
         return List.of();
     }
 }

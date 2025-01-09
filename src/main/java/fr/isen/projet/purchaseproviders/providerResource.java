@@ -37,18 +37,26 @@ public class providerResource {
 
     // Endpoint pour créer un nouveau provider
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createProvider(ProviderModel provider) {
-        ProviderModel createdProvider = providerService.createProvider(provider);
-        return Response.status(Response.Status.CREATED).entity(createdProvider).build();
+        try {
+            providerService.createProvider(provider);
+            return Response.status(Response.Status.CREATED)
+                    .entity("Le provider a bien été ajouté avec succès").build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erreur lors de l'ajout du provider : " + e.getMessage()).build();
+        }
     }
 
-    /*// Endpoint pour mettre à jour une provider existante
+    // Endpoint pour mettre à jour une provider existante
     @PUT
     @Path("/{id}")
     public Response updateProvider(@PathParam("id") String id, ProviderModel updatedProvider) {
         ProviderModel provider = providerService.updateProvider(updatedProvider);
         if (provider == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Adresse non trouvée").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Provider non trouvée").build();
         }
         return Response.ok(provider).build();
     }
@@ -59,5 +67,5 @@ public class providerResource {
     public Response deleteProvider(@PathParam("id") String id) {
         providerService.deleteProvider(id);
         return Response.noContent().build();
-    }*/
+    }
 }
