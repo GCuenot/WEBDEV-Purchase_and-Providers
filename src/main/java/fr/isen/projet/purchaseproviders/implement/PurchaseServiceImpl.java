@@ -19,6 +19,27 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public PurchaseModel createPurchase(PurchaseModel purchase) {
+        // Vérification que l'idProduct existe dans la table product
+        String checkProductSql = "SELECT COUNT(*) FROM product WHERE id_product = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement checkStmt = conn.prepareStatement(checkProductSql)) {
+
+            checkStmt.setString(1, purchase.getIdProduct());
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    // Erreur si le produit n'existe pas
+                    throw new ProductNotFoundException("Produit avec idProduct " + purchase.getIdProduct() + " non trouvé.");
+                }
+            }
+        } catch (SQLException e) {
+            // Si c'est une erreur de connexion ou d'exécution de la requête
+            throw new RuntimeException("Erreur lors de la vérification de l'existence du produit", e);
+        } catch (ProductNotFoundException e) {
+            // Gestion spécifique de l'exception si le produit n'existe pas
+            throw e;
+        }
+
+        // Si l'idProduct est valide, on peut insérer la nouvelle purchase
         String sql = "INSERT INTO purchase (id, buyDate, price, quantity, state, idProduct) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -36,9 +57,18 @@ public class PurchaseServiceImpl implements PurchaseService {
             stmt.executeUpdate();
             return purchase;
         } catch (SQLException e) {
-            throw new RuntimeException("Error creating purchase", e);
+            // Gestion des erreurs lors de l'insertion
+            throw new RuntimeException("Erreur lors de la création de l'achat", e);
         }
     }
+
+    // Exception personnalisée pour indiquer que le produit n'a pas été trouvé
+    public class ProductNotFoundException extends RuntimeException {
+        public ProductNotFoundException(String message) {
+            super(message);
+        }
+    }
+
 
     @Override
     public PurchaseModel readPurchase(String id) {
