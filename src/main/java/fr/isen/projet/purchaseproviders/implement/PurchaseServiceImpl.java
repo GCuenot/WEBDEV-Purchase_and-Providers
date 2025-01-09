@@ -40,7 +40,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 
         // Vérification que l'idOrder existe dans la table order
-        String checkOrderSql = "SELECT COUNT(*) FROM `order` WHERE id_order = ?";
+        String checkOrderSql = "SELECT COUNT(*) FROM `order` WHERE uuid_order = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkOrderSql)) {
 
@@ -163,8 +163,8 @@ public class PurchaseServiceImpl implements PurchaseService {
             stmt.setInt(3, purchase.getQuantity());
             stmt.setString(4, purchase.getState().toString());
             stmt.setString(5, purchase.getIdProduct());
-            stmt.setString(6, purchase.getId());
-            stmt.setString(7, purchase.getIdOrder());
+            stmt.setString(6, purchase.getIdOrder());
+            stmt.setString(7, purchase.getId());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {

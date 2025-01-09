@@ -72,6 +72,6 @@ public class PurchaseModel {
     }
 
     public void setIdOrder(String idOrder) {
-        this.idOrder = idProduct;
+        this.idOrder = idOrder;
     }
 }
