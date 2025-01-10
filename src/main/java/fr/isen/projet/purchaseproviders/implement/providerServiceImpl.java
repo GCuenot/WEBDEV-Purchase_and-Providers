@@ -19,24 +19,40 @@ public class providerServiceImpl implements ProviderService{
 
     @Override
     public ProviderModel createProvider(ProviderModel provider) {
-        String sql = "INSERT INTO provider (id, name, service, siren, status, id_contact, registration_date, region, legal_informations, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, provider.getId());
-            stmt.setString(2, provider.getName());
-            stmt.setString(3, provider.getService());
-            stmt.setString(4, provider.getSIREN());
-            stmt.setString(5, provider.getStatus());
-            stmt.setString(6, provider.getIdContact());
-            stmt.setString(7, provider.getRegistrationDate());
-            stmt.setString(8, provider.getRegion());
-            stmt.setString(9, provider.getLegalInformations());
-            stmt.setString(10, provider.getCategory());
-            stmt.executeUpdate();
+        // Vérification si l'id_contact existe dans contact_model
+        String checkContactSql = "SELECT COUNT(*) FROM contact_model WHERE uuid = ?";
+        String insertSql = "INSERT INTO provider (id, name, service, siren, status, id_contact, registration_date, region, legal_informations, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = dataSource.getConnection()) {
+            // Vérifier si l'id_contact est valide
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkContactSql)) {
+                checkStmt.setString(1, provider.getIdContact());
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        throw new RuntimeException("Error: id_contact " + provider.getIdContact() + " does not exist in contact_model.");
+                    }
+                }
+            }
+
+            // Insérer le provider si l'id_contact est valide
+            try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+                stmt.setString(1, provider.getId());
+                stmt.setString(2, provider.getName());
+                stmt.setString(3, provider.getService());
+                stmt.setString(4, provider.getSIREN());
+                stmt.setString(5, provider.getStatus());
+                stmt.setString(6, provider.getIdContact());
+                stmt.setString(7, provider.getRegistrationDate());
+                stmt.setString(8, provider.getRegion());
+                stmt.setString(9, provider.getLegalInformations());
+                stmt.setString(10, provider.getCategory());
+                stmt.executeUpdate();
+            }
+
             return provider;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error creating provider" + e.getMessage(), e);
+            throw new RuntimeException("Error creating provider: " + e.getMessage(), e);
         }
     }
 
