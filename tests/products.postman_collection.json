@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "091802cb-4e76-4453-bdd2-8163f51efdc2",
+		"name": "products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31182587"
+	},
+	"item": [
+		{
+			"name": "products_id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id_product\": \"123e4567-e89b-12\",  // Identifiant du produit (UID 16 caractères)\r\n  \"name\": \"Updated Product Name\",\r\n  \"unit_price\": 29.99,\r\n  \"status\": \"Available\",\r\n  \"id_subcategory\": 2,\r\n  \"stock\": 100,\r\n  \"id_provider\": \"987f6543-z89c-45\",\r\n  \"date_updated\": \"2025-01-08T14:30:00\",\r\n  \"bDelete\": 0\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/products/id",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"products",
+						"id"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
