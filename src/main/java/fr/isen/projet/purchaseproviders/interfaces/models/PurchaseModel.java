@@ -11,6 +11,7 @@ public class PurchaseModel {
     private PURCHASE_STATE state;
     private String idProduct;
     private String idOrder;
+    private String idProvider;
 
     // Getter et Setter pour id
     public String getId() {
@@ -73,5 +74,15 @@ public class PurchaseModel {
 
     public void setIdOrder(String idOrder) {
         this.idOrder = idOrder;
+    }
+
+    // Getter pour idProvider
+    public String getIdProvider() {
+        return idProvider;
+    }
+
+    // Setter pour idProvider
+    public void setIdProvider(String idProvider) {
+        this.idProvider = idProvider;
     }
 }

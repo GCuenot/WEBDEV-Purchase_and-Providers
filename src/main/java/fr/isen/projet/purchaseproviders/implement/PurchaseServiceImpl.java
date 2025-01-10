@@ -23,48 +23,49 @@ public class PurchaseServiceImpl implements PurchaseService {
         String checkProductSql = "SELECT COUNT(*) FROM product WHERE id_product = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkProductSql)) {
-
             checkStmt.setString(1, purchase.getIdProduct());
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    // Erreur si le produit n'existe pas
                     throw new ProductNotFoundException("Produit avec idProduct " + purchase.getIdProduct() + " non trouvé.");
                 }
             }
         } catch (SQLException e) {
-            // Si c'est une erreur de connexion ou d'exécution de la requête
             throw new RuntimeException("Erreur lors de la vérification de l'existence du produit", e);
-        } catch (ProductNotFoundException e) {
-            // Gestion spécifique de l'exception si le produit n'existe pas
-            throw e;
         }
 
-        // Vérification que l'idOrder existe dans la table order
-        String checkOrderSql = "SELECT COUNT(*) FROM `order` WHERE uuid_order = ?";
+        // Vérification que l'idProvider existe dans la table provider
+        String checkProviderSql = "SELECT COUNT(*) FROM provider WHERE id_provider = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement checkStmt = conn.prepareStatement(checkProviderSql)) {
+            checkStmt.setString(1, purchase.getIdProvider());
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new ProviderNotFoundException("Fournisseur avec idProvider " + purchase.getIdProvider() + " non trouvé.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur lors de la vérification de l'existence du fournisseur", e);
+        }
+
+        // Vérification que l'idOrder existe dans la table orders
+        String checkOrderSql = "SELECT COUNT(*) FROM orders WHERE uuid_order = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkOrderSql)) {
-
             checkStmt.setString(1, purchase.getIdOrder());
             try (ResultSet rs = checkStmt.executeQuery()) {
                 if (rs.next() && rs.getInt(1) == 0) {
-                    // Erreur si l'ordre n'existe pas
                     throw new OrderNotFoundException("Ordre avec idOrder " + purchase.getIdOrder() + " non trouvé.");
                 }
             }
         } catch (SQLException e) {
-            // Si c'est une erreur de connexion ou d'exécution de la requête
             throw new RuntimeException("Erreur lors de la vérification de l'existence de l'ordre", e);
-        } catch (OrderNotFoundException e) {
-            // Gestion spécifique de l'exception si l'ordre n'existe pas
-            throw e;
         }
 
-        // Si les idProduct et idOrder sont valides, on peut insérer la nouvelle purchase
-        String sql = "INSERT INTO purchase (id, buyDate, price, quantity, state, idProduct, idOrder) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // Insertion de la nouvelle purchase
+        String sql = "INSERT INTO purchase (id, buyDate, price, quantity, state, idProduct, idOrder, idProvider) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Conversion de java.util.Date en java.sql.Date
             java.sql.Date sqlDate = new java.sql.Date(purchase.getBuyDate().getTime());
 
             stmt.setString(1, purchase.getId());
@@ -74,34 +75,18 @@ public class PurchaseServiceImpl implements PurchaseService {
             stmt.setString(5, purchase.getState().toString());
             stmt.setString(6, purchase.getIdProduct());
             stmt.setString(7, purchase.getIdOrder());
+            stmt.setString(8, purchase.getIdProvider());
 
             stmt.executeUpdate();
             return purchase;
         } catch (SQLException e) {
-            // Gestion des erreurs lors de l'insertion
             throw new RuntimeException("Erreur lors de la création de l'achat", e);
         }
     }
 
-    // Exception personnalisée pour indiquer que le produit n'a pas été trouvé
-    public class ProductNotFoundException extends RuntimeException {
-        public ProductNotFoundException(String message) {
-            super(message);
-        }
-    }
-
-    // Exception personnalisée pour indiquer que l'ordre n'a pas été trouvé
-    public class OrderNotFoundException extends RuntimeException {
-        public OrderNotFoundException(String message) {
-            super(message);
-        }
-    }
-
-
-
     @Override
     public PurchaseModel readPurchase(String id) {
-        String sql = "SELECT id, buyDate, price, quantity, state, idProduct, idOrder FROM purchase WHERE id = ?";
+        String sql = "SELECT id, buyDate, price, quantity, state, idProduct, idOrder, idProvider FROM purchase WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, id);
@@ -115,20 +100,22 @@ public class PurchaseServiceImpl implements PurchaseService {
                     purchase.setState(PURCHASE_STATE.valueOf(rs.getString("state")));
                     purchase.setIdProduct(rs.getString("idProduct"));
                     purchase.setIdOrder(rs.getString("idOrder"));
+                    purchase.setIdProvider(rs.getString("idProvider"));
+
                     return purchase;
                 } else {
                     throw new RuntimeException("Purchase not found for ID: " + id);
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error fetching purchase by ID", e);
+            throw new RuntimeException("Erreur lors de la récupération de l'achat par ID", e);
         }
     }
 
     @Override
     public List<PurchaseModel> readAllPurchase() {
         List<PurchaseModel> purchases = new ArrayList<>();
-        String sql = "SELECT id, buyDate, price, quantity, state, idProduct, idOrder FROM purchase";
+        String sql = "SELECT id, buyDate, price, quantity, state, idProduct, idOrder, idProvider FROM purchase";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -141,21 +128,21 @@ public class PurchaseServiceImpl implements PurchaseService {
                 purchase.setState(PURCHASE_STATE.valueOf(rs.getString("state")));
                 purchase.setIdProduct(rs.getString("idProduct"));
                 purchase.setIdOrder(rs.getString("idOrder"));
+                purchase.setIdProvider(rs.getString("idProvider"));
                 purchases.add(purchase);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error fetching all purchases", e);
+            throw new RuntimeException("Erreur lors de la récupération de tous les achats", e);
         }
         return purchases;
     }
 
     @Override
     public PurchaseModel updatePurchase(PurchaseModel purchase) {
-        String sql = "UPDATE purchase SET buyDate = ?, price = ?, quantity = ?, state = ?, idProduct = ?, idOrder = ? WHERE id = ?";
+        String sql = "UPDATE purchase SET buyDate = ?, price = ?, quantity = ?, state = ?, idProduct = ?, idOrder = ?, idProvider = ? WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Conversion de java.util.Date en java.sql.Date
             java.sql.Date sqlDate = new java.sql.Date(purchase.getBuyDate().getTime());
 
             stmt.setDate(1, sqlDate);
@@ -164,15 +151,16 @@ public class PurchaseServiceImpl implements PurchaseService {
             stmt.setString(4, purchase.getState().toString());
             stmt.setString(5, purchase.getIdProduct());
             stmt.setString(6, purchase.getIdOrder());
-            stmt.setString(7, purchase.getId());
+            stmt.setString(7, purchase.getIdProvider());
+            stmt.setString(8, purchase.getId());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                throw new RuntimeException("No purchase found with ID: " + purchase.getId());
+                throw new RuntimeException("Aucun achat trouvé avec l'ID : " + purchase.getId());
             }
             return purchase;
         } catch (SQLException e) {
-            throw new RuntimeException("Error updating purchase", e);
+            throw new RuntimeException("Erreur lors de la mise à jour de l'achat", e);
         }
     }
 
@@ -184,10 +172,10 @@ public class PurchaseServiceImpl implements PurchaseService {
             stmt.setString(1, id);
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                throw new RuntimeException("No purchase found with ID: " + id);
+                throw new RuntimeException("Aucun achat trouvé avec l'ID : " + id);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error deleting purchase", e);
+            throw new RuntimeException("Erreur lors de la suppression de l'achat", e);
         }
     }
 
@@ -204,8 +192,26 @@ public class PurchaseServiceImpl implements PurchaseService {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error fetching price evolution for product: " + idProduct, e);
+            throw new RuntimeException("Erreur lors de la récupération de l'évolution des prix pour le produit : " + idProduct, e);
         }
         return prices;
+    }
+
+    public class ProductNotFoundException extends RuntimeException {
+        public ProductNotFoundException(String message) {
+            super(message);
+        }
+    }
+
+    public class ProviderNotFoundException extends RuntimeException {
+        public ProviderNotFoundException(String message) {
+            super(message);
+        }
+    }
+
+    public class OrderNotFoundException extends RuntimeException {
+        public OrderNotFoundException(String message) {
+            super(message);
+        }
     }
 }
