@@ -34,7 +34,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 
         // Vérification que l'idProvider existe dans la table provider
-        String checkProviderSql = "SELECT COUNT(*) FROM provider WHERE id_provider = ?";
+        String checkProviderSql = "SELECT COUNT(*) FROM provider WHERE id = ?";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkProviderSql)) {
             checkStmt.setString(1, purchase.getIdProvider());
