@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fb37460b-5e82-4c8a-b611-dfc3af556cc9",
+		"_postman_id": "a3ed35ec-9a48-4efc-86ab-e5c7f0442e36",
 		"name": "provider",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31182587"
+		"_exporter_id": "40327042"
 	},
 	"item": [
 		{
@@ -54,7 +54,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"7b9a1234-d5ef-48\",\r\n  \"name\": \"Tech Solutions SAS\",\r\n  \"service\": \"Cloud Computing & IT Consulting\",\r\n  \"siren\": \"892345678\",\r\n  \"status\": \"Active\",\r\n  \"idContact\": \"a8dff5c7-8d88-4fcb-jklo-e4a09de05e36\",\r\n  \"registrationDate\": \"2018-06-15\",\r\n  \"region\": \"Ile-de-France\",\r\n  \"legalInformations\": \"SAS au capital de 500000 EUR, immatriculee au RCS de Paris\",\r\n  \"category\": \"Technology\"\r\n}",
+					"raw": "{\r\n  \"id\": \"123e4567-e89b-12\",\r\n  \"name\": \"Provider Name\",\r\n  \"service\": \"IT Services\",\r\n  \"siren\": \"123456789\",\r\n  \"status\": \"Active\",\r\n  \"idContact\": \"5f7c6d2d-d2c8-4c42-bb7b-73e17c8fdb92\",\r\n  \"registrationDate\": \"2025-01-01\",\r\n  \"region\": \"Ile-de-France\",\r\n  \"legalInformations\": \"Company Details\",\r\n  \"category\": \"Technology\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -80,7 +80,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"7b9a1234-d5ef-48\",\r\n  \"name\": \"Updated Provider Name\",\r\n  \"service\": \"Updated IT Services\",\r\n  \"siren\": \"987654321\",\r\n  \"status\": \"Inactive\",\r\n  \"idContact\": \"updated123-e45-6\",\r\n  \"registrationDate\": \"2024-12-01\",\r\n  \"region\": \"Occitanie\",\r\n  \"legalInformations\": \"Updated Company Details\",\r\n  \"category\": \"Technology\"\r\n}\r\n",
+					"raw": "{\r\n  \"id\": \"123e4567-e89b-12\",\r\n  \"name\": \"Updated Provider Name\",\r\n  \"service\": \"Updated IT Services\",\r\n  \"SIREN\": \"987654321\",\r\n  \"status\": \"Inactive\",\r\n  \"idContact\": \"updated123-e45-6\",\r\n  \"registrationDate\": \"2024-12-01\",\r\n  \"region\": \"Occitanie\",\r\n  \"legalInformations\": \"Updated Company Details\",\r\n  \"category\": \"Updated Technology\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -88,13 +88,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{server}}/provider/7b9a1234-d5ef-48",
+					"raw": "{{server}}/provider/id",
 					"host": [
 						"{{server}}"
 					],
 					"path": [
 						"provider",
-						"7b9a1234-d5ef-48"
+						"id"
 					]
 				}
 			},
@@ -106,57 +106,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{server}}/provider/7b9a1234-d5ef-48",
+					"raw": "{{server}}/provider/id",
 					"host": [
 						"{{server}}"
 					],
 					"path": [
 						"provider",
-						"7b9a1234-d5ef-48"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "provider_annual",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{server}}/provider/annual/year",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"provider",
-						"annual",
-						"year"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "provider_monthly",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{server}}/provider/monthly/year",
-					"host": [
-						"{{server}}"
-					],
-					"path": [
-						"provider",
-						"monthly",
-						"year"
+						"id"
 					]
 				}
 			},

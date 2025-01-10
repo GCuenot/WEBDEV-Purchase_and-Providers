@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "da9d88cd-2a0e-4ccd-b1fc-991ab128c61e",
+		"_postman_id": "2320d65e-d024-4b75-8d70-f5b8c80cc0ae",
 		"name": "purchase",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31182587"
+		"_exporter_id": "40327042"
 	},
 	"item": [
 		{
@@ -48,7 +48,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"234e5678-f89c-23\",\r\n  \"buyDate\": \"2025-01-01\",\r\n  \"price\": 199.99,\r\n  \"quantity\": 2,\r\n  \"state\": \"confirmed\",\r\n  \"idProduct\": \"57d8722a-cdbe-11ef-bd31-9822eff265f8\",\r\n  \"idOrder\": \"7755971b-e24f-4d0c-9370-1d85f41d52af\",\r\n  \"idProvider\": \"b259e5d8-48b9-48\"\r\n}\r\n",
+					"raw": "{\r\n  \"id\": \"00234e5678-g89c-23\",\r\n  \"buyDate\": \"2025-01-01\",\r\n  \"price\": 199.99,\r\n  \"quantity\": 2,\r\n  \"state\": \"confirmed\",\r\n  \"idProduct\": \"57ecc6cb-cdbe-11ef-bd31-9822eff265f8\",\r\n  \"idOrder\": \"7755971b-e24f-4d0c-9370-1d85f41d52af\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,7 +74,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": \"234e5678-f89c-23\",\r\n  \"buyDate\": \"2025-01-15\",\r\n  \"price\": 299.99,\r\n  \"quantity\": 3,\r\n  \"state\": \"PENDING\",\r\n  \"idProduct\": \"updated345f6789g\"\r\n}\r\n",
+					"raw": "{\r\n  \"id\": \"00234e5678-g89c-23\",\r\n  \"buyDate\": \"2025-01-01\",\r\n  \"price\": 666.66,\r\n  \"quantity\": 5,\r\n  \"state\": \"confirmed\",\r\n  \"idProduct\": \"57ecbc83-cdbe-11ef-bd31-9822eff265f8\",\r\n  \"idOrder\": \"6e570750-6ad3-495e-9a07-7b6a35e1d2b0\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -82,13 +82,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{server}}/purchase/id",
+					"raw": "{{server}}/purchase/02d46de9-f252-40",
 					"host": [
 						"{{server}}"
 					],
 					"path": [
 						"purchase",
-						"id"
+						"02d46de9-f252-40"
 					]
 				}
 			},
@@ -118,7 +118,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "{{server}}/purchase/price-evolution/6a83482d-d29d-45e7-8c7f-e73e324fe11f",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"purchase",
+						"price-evolution",
+						"6a83482d-d29d-45e7-8c7f-e73e324fe11f"
+					]
 				}
 			},
 			"response": []
